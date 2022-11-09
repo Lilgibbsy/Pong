@@ -38,12 +38,13 @@ function ballMove() {
   position[0].y += dy;
 }
 //PlayerMove
+let dyTwo = 0;
 function drawPlayer() {
   ctx.fillStyle = "white";
   ctx.fillRect(position[1].x, position[1].y, 5, 70);
   ctx.fillStyle = "white";
   ctx.fillRect(position[2].x, position[2].y, 5, 70);
-  let dyTwo = 0;
+
   position[1].y += dyTwo;
 }
 document.addEventListener("keydown", playerMove);
@@ -51,10 +52,10 @@ function playerMove(event) {
   const up = 87;
   const down = 83;
   if (event.keyCode === up) {
-    dyTwo = -10;
+    position[1].y -= 30;
   }
   if (event.keyCode === down) {
-    dyTwo = 10;
+    position[1].y += 30;
   }
 }
 //Clear canvas
@@ -65,4 +66,29 @@ function clearCanvas() {
   ctx.fillStyle = "grey";
   ctx.fillRect(cnv.width / 2, 0, 2, cnv.height);
   ctx.restore();
+}
+//Ball player collision
+function ballCollision() {
+  if (
+    position[0].x == 50 &&
+    position[0].y > position[1].y &&
+    position[0].y - position[1].y < 70
+  ) {
+    dx = 0 - dx;
+    dy = 0 - dy;
+    console.log("Hit");
+  }
+}
+//Ball wall collision
+function ballWallCollision() {
+  if (position[0].y > 500) {
+    dx = 0 - dx;
+    dy = 0 - dy;
+    console.log("Hit");
+  }
+  if (position[0].y < 0) {
+    dx = 0 - dx;
+    dy = 0 - dy;
+    console.log("Hit");
+  }
 }
